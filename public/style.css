@@ -1,0 +1,12 @@
+.rooms-table td:last-child {
+    width: 30px;
+    white-space: nowrap;
+}
+
+.rooms-table td:last-child a {
+    visibility: hidden;
+}
+
+.rooms-table tr:hover td:last-child a {
+    visibility: visible;
+}

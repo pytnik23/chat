@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1 Edit chat room
+    form(method="post")
+        .form-row
+            .form-group.col-md-6
+                label(for='chatRoomName') Name
+                input#chatRoomName.form-control(type='text', name="name" aria-describedby='roomNameHelp', placeholder='Enter a name', value=room.name)
+                small#roomNameHelp.form-text.text-muted Give your chatroom a meaningful name for peaple to refer to it.
+        button.btn.btn-primary(type='submit') Save chat room
+        a.btn.btn-secondary.ml-1(href="/admin/rooms") Cancel

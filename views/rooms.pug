@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .row.align-items-center
+        .col-auto.mr-auto
+            h1 Chat App Rooms
+        .col-auto
+            a.btn.btn-outline-primary(href="/admin/rooms/add") Add new chat room
+    table.table.rooms-table
+        thead
+            tr
+                th Name
+                th Id
+                th
+        tbody
+            each room in rooms
+                tr
+                    td= room.name
+                    td= room.id
+                    td
+                        a(href="/admin/rooms/edit/" + room.id)
+                            i.material-icons edit
+                        a.ml-2(href="/admin/rooms/delete/" + room.id)
+                            i.material-icons delete
