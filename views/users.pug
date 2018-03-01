@@ -2,3 +2,6 @@ extends layout
 
 block content
     h1 Chat App Users
+    ul
+        each user in users
+            li= user.name

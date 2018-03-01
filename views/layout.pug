@@ -15,17 +15,21 @@ html(lang='en')
                     span.navbar-toggler-icon
                 #navbarNavDropdown.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
-                        li.nav-item.active
-                            a.nav-link(href='/')
-                                | Home 
-                                span.sr-only (current)
-                        li.nav-item
+                        li.nav-item(class={active: currentUrl === '/'})
+                            a.nav-link(href='/') Home
+                        li.nav-item(class={active: currentUrl === '/admin/rooms'})
                             a.nav-link(href='/admin/rooms') Chat Rooms
-                        li.nav-item
+                        li.nav-item(class={active: currentUrl === '/admin/users'})
                             a.nav-link(href='/admin/users') Users
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link(href='/logout') Logout #{user.name}
         .container
             main.main-content
                 block content
+        
         script(src='/jquery.min.js')
-        script(src='/popper.min.js')
+        script(src='/umd/popper.min.js')
         script(src='/js/bootstrap.min.js')
+        
+        block script

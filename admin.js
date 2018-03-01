@@ -1,10 +1,17 @@
 const express = require('express');
 const uuidv4 = require('uuid/v4');
 
+let rooms = require('./data/rooms');
+let users = require('./data/users');
+
 const router = express.Router();
 module.exports = router;
 
-let rooms = require('./data/rooms');
+router.use(function (req, res, next) {
+    req.user.admin
+        ? next()
+        : res.redirect('/login');
+});
 
 router.get('/rooms', function (req, res) {
     res.render('rooms', {
@@ -29,24 +36,21 @@ router.route('/rooms/add')
     });
 
 router.route('/rooms/edit/:id')
-    .get(function (req, res) {
-        const room = rooms.filter(room => room.id === req.params.id)[0];
+    .all(function (req, res, next) {
+        const room = rooms.find(room => room.id === req.params.id);
 
         if (!room) {
             res.sendStatus(404);
             return;
         }
 
-        res.render('editRoom', { room });
+        res.locals.room = room;
+        next();
+    })
+    .get(function (req, res) {
+        res.render('editRoom');
     })
     .post(function (req, res) {
-        const room = rooms.filter(room => room.id === req.params.id)[0];
-
-        if (!room) {
-            res.sendStatus(404);
-            return;
-        }
-
         rooms = rooms.map(room => {
             return room.id === req.params.id
             ? { ...room, name: req.body.name }
@@ -63,5 +67,8 @@ router.get('/rooms/delete/:id', function (req, res) {
 });
 
 router.get('/users', function (req, res) {
-    res.render('users', { title: 'Admin Users' });
+    res.render('users', {
+        title: 'Admin Users',
+        users,
+    });
 });
